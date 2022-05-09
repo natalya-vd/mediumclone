@@ -70,7 +70,7 @@ function onSubmit() {
       password: dataForm.password,
     })
     .then(() => {
-      router.push({name: 'home'});
+      router.push({name: 'globalFeed'});
     });
 }
 </script>

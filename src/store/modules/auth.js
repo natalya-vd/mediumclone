@@ -100,7 +100,7 @@ const actions = {
         .then((response) => {
           commit(mutationTypes.registerSuccess, response.data.user);
           setItem('accessToken', response.data.user.token);
-          resolve(response.data.user); // Передаем далее в промис
+          resolve(response.data.user); // Передаем далее в компонент
         })
         .catch((result) => {
           commit(mutationTypes.registerFailure, result.response.data.errors);
@@ -119,7 +119,7 @@ const actions = {
           console.log(response);
           commit(mutationTypes.loginSuccess, response.data.user);
           setItem('accessToken', response.data.user.token);
-          resolve(response.data.user); // Передаем далее в промис
+          resolve(response.data.user); // Передаем далее в компонент
         })
         .catch((result) => {
           commit(mutationTypes.loginFailure, result.response.data.errors);
@@ -137,7 +137,7 @@ const actions = {
         .then((response) => {
           console.log(response);
           commit(mutationTypes.getCurrentUserSuccess, response.data.user);
-          resolve(response.data.user); // Передаем далее в промис
+          resolve(response.data.user); // Передаем далее в компонент
         })
         .catch(() => {
           commit(mutationTypes.getCurrentUserFailure);

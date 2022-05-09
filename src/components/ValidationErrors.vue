@@ -11,7 +11,6 @@ const props = defineProps({
   validationErrors: Object,
 });
 
-console.log(props.validationErrors);
 // eslint-disable-next-line arrow-body-style
 const errorMessages = computed(() => {
   return Object.keys(props.validationErrors).map((name) => {

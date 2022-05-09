@@ -80,7 +80,7 @@ function onSubmit() {
     })
     .then((user) => {
       console.log('successfully register user', user);
-      router.push({name: 'home'});
+      router.push({name: 'globalFeed'});
     });
 }
 </script>
