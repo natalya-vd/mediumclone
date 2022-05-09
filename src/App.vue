@@ -1,30 +1,20 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div>
+    <topbar />
+
+    <router-view />
   </div>
-  <router-view/>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script setup>
+import {useStore} from 'vuex';
+import {onMounted} from 'vue';
+import Topbar from '@/components/Topbar';
+import {actionTypes} from '@/store/modules/auth';
 
-#nav {
-  padding: 30px;
-}
+const store = useStore();
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+onMounted(() => store.dispatch(actionTypes.getCurrentUser));
+</script>
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+<style></style>
