@@ -39,22 +39,35 @@
           TAG LIST
         </router-link>
       </div>
-      PAGINATION
+      <pagination
+        :total="dataPagination.total"
+        :limit="dataPagination.limit"
+        :current-page="dataPagination.currentPage"
+        :url="dataPagination.url"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
-import {onMounted, computed} from 'vue';
+import {onMounted, computed, reactive} from 'vue';
 
 import {useStore} from 'vuex';
 import {actionTypes} from '@/store/modules/feed';
+import Pagination from '@/components/Pagination';
 
 const props = defineProps({
   apiUrl: {
     type: String,
     required: true,
   },
+});
+
+const dataPagination = reactive({
+  total: 500,
+  limit: 10,
+  currentPage: 5,
+  url: '/tags/dragons',
 });
 
 const store = useStore();

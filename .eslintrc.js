@@ -16,5 +16,7 @@ module.exports = {
     'no-shadow': ['error', {allow: ['state']}],
     'vue/multi-word-component-names': 'off',
     'import/extensions': ['error', 'never'],
+    'implicit-arrow-linebreak': 'off',
+    'import/prefer-default-export': 'off',
   },
 };
