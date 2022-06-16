@@ -40,21 +40,24 @@
         </router-link>
       </div>
       <pagination
-        :total="dataPagination.total"
-        :limit="dataPagination.limit"
-        :current-page="dataPagination.currentPage"
-        :url="dataPagination.url"
+        :total="feed.articlesCount"
+        :limit="limit"
+        :current-page="currentPage"
+        :url="baseUrl"
       />
     </div>
   </div>
 </template>
 
 <script setup>
-import {onMounted, computed, reactive} from 'vue';
+import {stringify, parseUrl} from 'query-string';
+import {onMounted, computed, ref, watch} from 'vue';
 
 import {useStore} from 'vuex';
 import {actionTypes} from '@/store/modules/feed';
 import Pagination from '@/components/Pagination';
+import {LIMIT} from '@/helpers/vars';
+import {useRoute} from 'vue-router';
 
 const props = defineProps({
   apiUrl: {
@@ -63,21 +66,36 @@ const props = defineProps({
   },
 });
 
-const dataPagination = reactive({
-  total: 500,
-  limit: 10,
-  currentPage: 5,
-  url: '/tags/dragons',
-});
+const route = useRoute();
+
+const limit = ref(LIMIT);
 
 const store = useStore();
 const isLoading = computed(() => store.state.feed.isLoading);
 const feed = computed(() => store.state.feed.data);
 const error = computed(() => store.state.feed.error);
+const currentPage = computed(() => Number(route.query.page || '1'));
+const baseUrl = computed(() => route.path);
+const offset = computed(() => currentPage.value * limit.value - limit.value);
 
-onMounted(() => {
-  store.dispatch(actionTypes.getFeed, {apiUrl: props.apiUrl});
+const fetchFeed = () => {
+  const parsedUrl = parseUrl(props.apiUrl);
+  const stringifiedParams = stringify({
+    limit: limit.value,
+    offset: offset.value,
+    ...parsedUrl.query,
+  });
+
+  const apiUrlWidthParams = `${parsedUrl.url}?${stringifiedParams}`;
+
+  store.dispatch(actionTypes.getFeed, {apiUrl: apiUrlWidthParams});
+};
+
+watch(currentPage, () => {
+  fetchFeed();
 });
 
-console.log(props);
+onMounted(() => {
+  fetchFeed();
+});
 </script>

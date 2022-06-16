@@ -18,5 +18,7 @@ module.exports = {
     'import/extensions': ['error', 'never'],
     'implicit-arrow-linebreak': 'off',
     'import/prefer-default-export': 'off',
+    'object-curly-newline': 'off',
+    'comma-dangle': 'off',
   },
 };
